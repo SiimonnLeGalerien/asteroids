@@ -15,6 +15,8 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    font = pygame.font.SysFont('arial', 32)
+
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
@@ -39,13 +41,17 @@ def main():
                 return
             for shot in shots:
                 if ast.collides(shot):
-                    ast.split()
+                    player.score += ast.split()
+                    print(player.score)
                     shot.kill()
         screen.fill("black")
         for obj in drawable:
             obj.draw(screen)
+        score = font.render(f"SCORE: {player.score}", False, (255, 255, 255))
+        screen.blit(score, (20, 690))
         pygame.display.flip()
         dt = clock.tick(60) / 1000
+    pygame.quit()
 
 
 if __name__ == "__main__":
